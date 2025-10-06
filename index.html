@@ -35,6 +35,154 @@
             color: var(--text-primary);
             line-height: 1.7;
             font-size: 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(0, 184, 212, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .particle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .particle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        .particle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: -10s;
+            animation-duration: 35s;
+        }
+
+        .particle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 30%;
+            left: 70%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+
+        .particle:nth-child(5) {
+            width: 90px;
+            height: 90px;
+            top: 70%;
+            left: 50%;
+            animation-delay: -20s;
+            animation-duration: 32s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Grid Pattern Overlay */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 184, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 184, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Pulsing Accent Elements */
+        .pulse-accent {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(0, 184, 212, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .pulse-accent:nth-child(2) {
+            animation-delay: 1s;
+            width: 300px;
+            height: 300px;
+        }
+
+        .pulse-accent:nth-child(3) {
+            animation-delay: 2s;
+            width: 400px;
+            height: 400px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            50% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
         }
 
         /* Navigation */
@@ -88,6 +236,73 @@
         nav a.active {
             color: var(--accent);
             border-bottom-color: var(--accent);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile Navigation */
+        .nav-menu {
+            display: flex;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.98);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-menu.active li {
+            margin: 0.5rem 0;
+        }
+
+        .nav-menu.active a {
+            display: block;
+            padding: 1rem 2rem;
+            border-bottom: none;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu.active a:hover,
+        .nav-menu.active a.active {
+            border-left-color: var(--accent);
+            background: rgba(0, 184, 212, 0.1);
         }
 
         /* Main Content */
@@ -457,14 +672,20 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav ul {
-                gap: 1rem;
-                font-size: 0.85rem;
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
             }
 
             nav .nav-container {
-                flex-direction: column;
-                gap: 1rem;
+                padding: 1rem;
             }
 
             main {
@@ -495,6 +716,41 @@
                 width: 250px;
                 margin-left: -125px;
             }
+
+            .particle {
+                display: none; /* Hide particles on mobile for performance */
+            }
+
+            .grid-overlay {
+                background-size: 30px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav .logo {
+                font-size: 1rem;
+            }
+
+            .hamburger span {
+                width: 20px;
+                height: 2px;
+            }
+
+            main {
+                padding: 80px 0.5rem 2rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .accordion-header {
+                padding: 1rem;
+            }
+
+            .accordion-title {
+                font-size: 1rem;
+            }
         }
 
         /* YAML/Code styling */
@@ -510,14 +766,146 @@
             color: var(--accent);
             font-weight: 600;
         }
+
+        /* Enhanced Visual Effects */
+        .accordion-item {
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 184, 212, 0.15);
+        }
+
+        .accordion-item.active {
+            box-shadow: 0 8px 25px rgba(0, 184, 212, 0.2);
+        }
+
+        /* Glowing effects for interactive elements */
+        .nav-link:hover {
+            text-shadow: 0 0 8px rgba(0, 184, 212, 0.5);
+        }
+
+        .accordion-title:hover {
+            text-shadow: 0 0 10px rgba(0, 184, 212, 0.3);
+        }
+
+        /* Enhanced code blocks */
+        pre {
+            position: relative;
+            overflow: hidden;
+        }
+
+        pre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 184, 212, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Enhanced tables */
+        table {
+            position: relative;
+            overflow: hidden;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 184, 212, 0.1);
+        }
+
+        /* Loading animation for content */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced back to top button */
+        #backToTop {
+            transition: all 0.3s ease;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(0, 184, 212, 0.2);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+            width: 0%;
+            transition: width 0.1s ease;
+        }
     </style>
 </head>
 <body>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="grid-overlay"></div>
+        <div class="pulse-accent"></div>
+        <div class="pulse-accent"></div>
+        <div class="pulse-accent"></div>
+    </div>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo">UAP AVATAR HYPOTHESIS</div>
-            <ul id="navMenu">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#overview" class="nav-link">Overview</a></li>
                 <li><a href="#pillar-1" class="nav-link">Pillar I</a></li>
                 <li><a href="#pillar-2" class="nav-link">Pillar II</a></li>
@@ -1192,6 +1580,31 @@ Decoherence_Mitigation:
 
     <!-- JavaScript -->
     <script>
+        // Hamburger Menu Functionality
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
         // Accordion Functionality
         document.querySelectorAll('.accordion-header').forEach(header => {
             header.addEventListener('click', () => {
@@ -1286,6 +1699,54 @@ Decoherence_Mitigation:
                 const contentInner = content.querySelector('.accordion-content-inner');
                 content.style.maxHeight = contentInner.scrollHeight + 'px';
             });
+        });
+
+        // Scroll Progress Indicator
+        const scrollProgress = document.getElementById('scrollProgress');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Add fade-in animation to content on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.querySelector('main');
+            mainContent.classList.add('fade-in');
+        });
+
+        // Enhanced smooth scrolling with offset
+        function smoothScrollTo(target, offset = 80) {
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe accordion items for scroll animations
+        document.querySelectorAll('.accordion-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
         });
     </script>
 </body>
