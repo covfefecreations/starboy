@@ -46,7 +46,7 @@
             background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
+            z-index: 1001;
             padding: 0;
         }
 
@@ -88,6 +88,50 @@
         nav a.active {
             color: var(--accent);
             border-bottom-color: var(--accent);
+        }
+
+        /* Translucent Container */
+        .translucent-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            margin: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .scrollable-content {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) transparent;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
         }
 
         /* Main Content */
@@ -387,8 +431,8 @@
         /* Back to Top Button */
         #backToTop {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 50px;
+            right: 50px;
             width: 50px;
             height: 50px;
             background: var(--accent);
@@ -400,7 +444,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            z-index: 999;
+            z-index: 1002;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -457,6 +501,11 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .translucent-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
             nav ul {
                 gap: 1rem;
                 font-size: 0.85rem;
@@ -495,6 +544,11 @@
                 width: 250px;
                 margin-left: -125px;
             }
+
+            #backToTop {
+                bottom: 20px;
+                right: 20px;
+            }
         }
 
         /* YAML/Code styling */
@@ -529,8 +583,11 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main>
+    <!-- Translucent Container -->
+    <div class="translucent-container">
+        <div class="scrollable-content">
+            <!-- Main Content -->
+            <main>
         <!-- Header -->
         <header class="document-header">
             <h1>UAP Avatar Hypothesis</h1>
@@ -1185,7 +1242,9 @@ Decoherence_Mitigation:
                 </div>
             </div>
         </div>
-    </main>
+            </main>
+        </div>
+    </div>
 
     <!-- Back to Top Button -->
     <button id="backToTop" aria-label="Back to top">↑</button>
