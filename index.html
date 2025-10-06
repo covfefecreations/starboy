@@ -1197,15 +1197,15 @@ Decoherence_Mitigation:
             header.addEventListener('click', () => {
                 const item = header.parentElement;
                 const content = item.querySelector('.accordion-content');
-                const contentInner = content.querySelector('.accordion-content-inner');
+                const contentInner = content?.querySelector('.accordion-content-inner');
                 
                 // Toggle active class
                 item.classList.toggle('active');
                 
                 // Animate accordion
-                if (item.classList.contains('active')) {
+                if (item.classList.contains('active') && content && contentInner) {
                     content.style.maxHeight = contentInner.scrollHeight + 'px';
-                } else {
+                } else if (content) {
                     content.style.maxHeight = '0';
                 }
             });
@@ -1258,19 +1258,29 @@ Decoherence_Mitigation:
             });
         }
 
-        window.addEventListener('scroll', updateActiveNav);
-        updateActiveNav(); // Initial call
-
         // Back to Top Button
         const backToTopBtn = document.getElementById('backToTop');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
+        // Throttled scroll handler for better performance
+        let scrollTimeout;
+        function handleScroll() {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
             }
-        });
+            scrollTimeout = setTimeout(() => {
+                updateActiveNav();
+                
+                // Back to top button visibility
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            }, 10);
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        updateActiveNav(); // Initial call
 
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({
@@ -1283,8 +1293,10 @@ Decoherence_Mitigation:
         window.addEventListener('resize', () => {
             document.querySelectorAll('.accordion-item.active').forEach(item => {
                 const content = item.querySelector('.accordion-content');
-                const contentInner = content.querySelector('.accordion-content-inner');
-                content.style.maxHeight = contentInner.scrollHeight + 'px';
+                const contentInner = content?.querySelector('.accordion-content-inner');
+                if (content && contentInner) {
+                    content.style.maxHeight = contentInner.scrollHeight + 'px';
+                }
             });
         });
     </script>
